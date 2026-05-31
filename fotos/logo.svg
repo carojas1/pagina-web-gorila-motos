@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="52%">
+      <stop offset="0%" stop-color="#1a0505"/>
+      <stop offset="70%" stop-color="#0d0000"/>
+      <stop offset="100%" stop-color="#080000"/>
+    </radialGradient>
+    <radialGradient id="faceR" cx="48%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#e8e0d0"/>
+      <stop offset="40%" stop-color="#c8bba0"/>
+      <stop offset="80%" stop-color="#8a7060"/>
+      <stop offset="100%" stop-color="#4a3020"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- FONDO OSCURO CIRCULAR -->
+  <circle cx="200" cy="200" r="196" fill="url(#bg)"/>
+  <!-- Textura sutil rojiza -->
+  <circle cx="200" cy="200" r="196" fill="none" stroke="#3a0808" stroke-width="2"/>
+  <circle cx="200" cy="200" r="180" fill="none" stroke="#2a0505" stroke-width="1" opacity=".5"/>
+
+  <!-- CHEVRON / V ROJO INFERIOR -->
+  <polygon points="200,375 85,285 130,285 200,345 270,285 315,285" fill="#cc0000" opacity=".9"/>
+  <polygon points="200,345 115,285 130,285 200,320 270,285 285,285" fill="#ff4444" opacity=".3"/>
+
+  <!-- ═══ LLAVES CRUZADAS ═══ -->
+  <!-- Llave IZQUIERDA (de abajo-izq a arriba-der) -->
+  <g transform="translate(200,205) rotate(-45)" filter="url(#shadow)">
+    <!-- Mango -->
+    <rect x="-9" y="-95" width="18" height="145" rx="5" fill="#b8b8b8"/>
+    <rect x="-7" y="-93" width="14" height="141" rx="4" fill="#d8d8d8"/>
+    <rect x="-4" y="-93" width="4" height="141" rx="2" fill="#f0f0f0" opacity=".4"/>
+    <!-- Cabeza superior (boca de llave) -->
+    <rect x="-22" y="-105" width="44" height="20" rx="4" fill="#c0c0c0"/>
+    <rect x="-18" y="-105" width="36" height="18" rx="3" fill="#d8d8d8"/>
+    <!-- Abertura de la llave -->
+    <rect x="-9" y="-98" width="18" height="12" rx="2" fill="#0d0000"/>
+    <!-- Oreja izquierda y derecha del extremo superior -->
+    <ellipse cx="-22" cy="-96" rx="7" ry="9" fill="#c0c0c0"/>
+    <ellipse cx="22" cy="-96" rx="7" ry="9" fill="#c0c0c0"/>
+    <!-- Extremo inferior -->
+    <rect x="-18" y="46" width="36" height="10" rx="3" fill="#b0b0b0"/>
+    <rect x="-12" y="54" width="24" height="8" rx="3" fill="#c0c0c0"/>
+    <!-- Gancho inferior -->
+    <path d="M -18,62 Q -22,72 -14,76 L 14,76 Q 22,72 18,62 Z" fill="#c0c0c0"/>
+  </g>
+  <!-- Llave DERECHA (de abajo-der a arriba-izq) -->
+  <g transform="translate(200,205) rotate(45)" filter="url(#shadow)">
+    <rect x="-9" y="-95" width="18" height="145" rx="5" fill="#b8b8b8"/>
+    <rect x="-7" y="-93" width="14" height="141" rx="4" fill="#d8d8d8"/>
+    <rect x="-4" y="-93" width="4" height="141" rx="2" fill="#f0f0f0" opacity=".4"/>
+    <rect x="-22" y="-105" width="44" height="20" rx="4" fill="#c0c0c0"/>
+    <rect x="-18" y="-105" width="36" height="18" rx="3" fill="#d8d8d8"/>
+    <rect x="-9" y="-98" width="18" height="12" rx="2" fill="#0d0000"/>
+    <ellipse cx="-22" cy="-96" rx="7" ry="9" fill="#c0c0c0"/>
+    <ellipse cx="22" cy="-96" rx="7" ry="9" fill="#c0c0c0"/>
+    <rect x="-18" y="46" width="36" height="10" rx="3" fill="#b0b0b0"/>
+    <rect x="-12" y="54" width="24" height="8" rx="3" fill="#c0c0c0"/>
+    <path d="M -18,62 Q -22,72 -14,76 L 14,76 Q 22,72 18,62 Z" fill="#c0c0c0"/>
+  </g>
+
+  <!-- ═══ CARA DEL GORILA ═══ -->
+  <!-- Cabello/pelaje lateral oscuro -->
+  <ellipse cx="130" cy="215" rx="22" ry="28" fill="#1a1008"/>
+  <ellipse cx="270" cy="215" rx="22" ry="28" fill="#1a1008"/>
+  <!-- Orejas -->
+  <ellipse cx="136" cy="210" rx="18" ry="22" fill="#3a2510"/>
+  <ellipse cx="136" cy="210" rx="11" ry="14" fill="#4a3018"/>
+  <ellipse cx="264" cy="210" rx="18" ry="22" fill="#3a2510"/>
+  <ellipse cx="264" cy="210" rx="11" ry="14" fill="#4a3018"/>
+
+  <!-- Cabeza completa -->
+  <ellipse cx="200" cy="218" rx="68" ry="72" fill="#2a1a0a"/>
+  <!-- Zona facial (más clara) -->
+  <ellipse cx="200" cy="228" rx="56" ry="62" fill="url(#faceR)"/>
+  <!-- Frente oscura prominente -->
+  <ellipse cx="200" cy="180" rx="52" ry="28" fill="#2a1a0a"/>
+  <path d="M 148,185 Q 175,162 200,168 Q 225,162 252,185 L 248,195 Q 222,172 200,178 Q 178,172 152,195 Z" fill="#1a0e06"/>
+
+  <!-- Cejas muy prominentes (gorila) -->
+  <path d="M 148,192 Q 172,178 200,184 Q 228,178 252,192" stroke="#0a0602" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M 150,190 Q 174,177 200,183 Q 226,177 250,190" stroke="#2a1a0a" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <!-- Cuencas oculares -->
+  <ellipse cx="175" cy="207" rx="18" ry="15" fill="#1a0e06"/>
+  <ellipse cx="225" cy="207" rx="18" ry="15" fill="#1a0e06"/>
+  <!-- Iris -->
+  <circle cx="175" cy="207" r="10" fill="#0d0802"/>
+  <circle cx="225" cy="207" r="10" fill="#0d0802"/>
+  <!-- Pupilas -->
+  <circle cx="175" cy="207" r="7" fill="#080400"/>
+  <circle cx="225" cy="207" r="7" fill="#080400"/>
+  <!-- Brillo ocular -->
+  <circle cx="178" cy="203" r="3" fill="white" opacity=".55"/>
+  <circle cx="228" cy="203" r="3" fill="white" opacity=".55"/>
+
+  <!-- Nariz gorila -->
+  <ellipse cx="200" cy="228" rx="20" ry="15" fill="#5a3820"/>
+  <ellipse cx="200" cy="227" rx="16" ry="12" fill="#6a4428"/>
+  <ellipse cx="190" cy="225" rx="7" ry="7" fill="#1a0a04"/>
+  <ellipse cx="210" cy="225" rx="7" ry="7" fill="#1a0a04"/>
+  <!-- Fosa nasal luminosidad -->
+  <ellipse cx="188" cy="224" rx="3" ry="2.5" fill="#2a1208" opacity=".6"/>
+  <ellipse cx="212" cy="224" rx="3" ry="2.5" fill="#2a1208" opacity=".6"/>
+
+  <!-- Zona del hocico/labios -->
+  <ellipse cx="200" cy="248" rx="30" ry="22" fill="#7a5030"/>
+  <ellipse cx="200" cy="252" rx="26" ry="18" fill="#6a4228"/>
+  <!-- Labio superior -->
+  <path d="M 178,242 Q 188,238 200,240 Q 212,238 222,242" stroke="#3a1e0a" stroke-width="3" fill="none"/>
+  <!-- Boca abierta (ligeramente) -->
+  <path d="M 180,252 Q 200,260 220,252" stroke="#1a0804" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <!-- Dientes inferiores -->
+  <path d="M 185,255 Q 200,263 215,255 L 213,260 Q 200,268 187,260 Z" fill="#f0ece0"/>
+  <!-- Barbilla -->
+  <ellipse cx="200" cy="270" rx="22" ry="10" fill="#5a3820"/>
+
+  <!-- ═══ GORRA ROJA ═══ -->
+  <!-- Sombra bajo gorra -->
+  <ellipse cx="200" cy="174" rx="64" ry="14" fill="#0a0202" opacity=".7"/>
+  <!-- Cuerpo de la gorra -->
+  <path d="M 136,168 Q 150,138 200,132 Q 250,138 264,168 L 258,175 Q 240,148 200,143 Q 160,148 142,175 Z" fill="#c00000"/>
+  <!-- Panel frontal más oscuro/satinado -->
+  <path d="M 148,168 Q 162,142 200,137 Q 238,142 252,168 L 248,173 Q 234,148 200,143 Q 166,148 152,173 Z" fill="#a80000"/>
+  <!-- Pliegues de la tela -->
+  <line x1="200" y1="135" x2="200" y2="174" stroke="#800000" stroke-width="1.5" opacity=".5"/>
+  <line x1="175" y1="140" x2="170" y2="173" stroke="#800000" stroke-width="1" opacity=".4"/>
+  <line x1="225" y1="140" x2="230" y2="173" stroke="#800000" stroke-width="1" opacity=".4"/>
+  <!-- Botón superior -->
+  <circle cx="200" cy="133" r="7" fill="#800000"/>
+  <circle cx="200" cy="133" r="4" fill="#900000"/>
+  <!-- Ala/visera de la gorra -->
+  <path d="M 136,172 Q 168,192 200,194 Q 232,192 264,172 L 262,178 Q 232,200 200,202 Q 168,200 138,178 Z" fill="#900000"/>
+  <path d="M 140,174 Q 170,190 200,192 Q 230,190 260,174" fill="none" stroke="#700000" stroke-width="1.5"/>
+  <!-- Banda interior de la gorra -->
+  <path d="M 142,173 Q 170,186 200,188 Q 230,186 258,173 L 258,177 Q 230,190 200,192 Q 170,190 142,177 Z" fill="#7a0000" opacity=".6"/>
+  <!-- Texto GM en la gorra -->
+  <text x="200" y="166" font-family="Impact,Arial Black,sans-serif" font-size="30"
+        font-weight="900" fill="white" text-anchor="middle" letter-spacing="2"
+        filter="url(#shadow)">GM</text>
+
+  <!-- ═══ NÚMEROS 20 y 22 ═══ -->
+  <text x="90" y="246" font-family="Impact,Arial Black,sans-serif" font-size="36"
+        font-weight="900" fill="white" text-anchor="middle" filter="url(#shadow)"
+        stroke="#333" stroke-width="1">20</text>
+  <text x="310" y="246" font-family="Impact,Arial Black,sans-serif" font-size="36"
+        font-weight="900" fill="white" text-anchor="middle" filter="url(#shadow)"
+        stroke="#333" stroke-width="1">22</text>
+
+  <!-- ═══ BANNER SUPERIOR — GORILA ═══ -->
+  <!-- Forma del banner (rectángulo redondeado arqueado) -->
+  <rect x="62" y="42" width="276" height="58" rx="29" fill="#cc0000" filter="url(#shadow)"/>
+  <rect x="66" y="46" width="268" height="50" rx="25" fill="#dd1111"/>
+  <!-- Borde superior brillante -->
+  <path d="M 91,50 Q 200,42 309,50" stroke="#ff6666" stroke-width="1.5" fill="none" opacity=".6"/>
+  <!-- Decoraciones en esquinas -->
+  <rect x="70" y="56" width="12" height="12" rx="2" fill="#aa0000"/>
+  <rect x="318" y="56" width="12" height="12" rx="2" fill="#aa0000"/>
+  <circle cx="76" cy="62" r="4" fill="#ff4444" opacity=".7"/>
+  <circle cx="324" cy="62" r="4" fill="#ff4444" opacity=".7"/>
+  <!-- Puntos tipo viñeta antes y después -->
+  <circle cx="98" cy="68" r="4" fill="white" opacity=".9"/>
+  <circle cx="302" cy="68" r="4" fill="white" opacity=".9"/>
+  <!-- Texto GORILA -->
+  <text x="200" y="80" font-family="Oswald,Impact,Arial Black,sans-serif" font-size="32"
+        font-weight="900" fill="white" text-anchor="middle" letter-spacing="10"
+        filter="url(#shadow)">GORILA</text>
+
+  <!-- ═══ BANNER INFERIOR — MOTOS ═══ -->
+  <rect x="62" y="300" width="276" height="58" rx="29" fill="#cc0000" filter="url(#shadow)"/>
+  <rect x="66" y="304" width="268" height="50" rx="25" fill="#dd1111"/>
+  <path d="M 91,308 Q 200,300 309,308" stroke="#ff6666" stroke-width="1.5" fill="none" opacity=".6"/>
+  <rect x="70" y="314" width="12" height="12" rx="2" fill="#aa0000"/>
+  <rect x="318" y="314" width="12" height="12" rx="2" fill="#aa0000"/>
+  <circle cx="76" cy="320" r="4" fill="#ff4444" opacity=".7"/>
+  <circle cx="324" cy="320" r="4" fill="#ff4444" opacity=".7"/>
+  <circle cx="98" cy="326" r="4" fill="white" opacity=".9"/>
+  <circle cx="302" cy="326" r="4" fill="white" opacity=".9"/>
+  <text x="200" y="339" font-family="Oswald,Impact,Arial Black,sans-serif" font-size="32"
+        font-weight="900" fill="white" text-anchor="middle" letter-spacing="10"
+        filter="url(#shadow)">MOTOS</text>
+</svg>

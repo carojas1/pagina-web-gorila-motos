@@ -1,0 +1,25 @@
+===================================================
+  GORILLA MOTORS — INSTRUCCIONES DE IMAGENES
+===================================================
+
+LOGO (MUY IMPORTANTE):
+  fotos\logo.png
+  Guarda ahi la imagen del gorila con llaves que me enviaste.
+  Sin este archivo, el logo no aparece (igual sale el texto).
+
+FOTOS DEL TALLER:
+  fotos\royal-enfield.jpg    → Royal Enfield 500
+  fotos\motor-trabajo.jpg    → Motor desmontado
+  fotos\diagnostico.jpg      → Diagnostico ECU
+
+FOTOS DE SERVICIOS:
+  fotos\servicios\aceite.jpg
+  fotos\servicios\repuestos.jpg
+  fotos\servicios\revision.jpg
+  fotos\servicios\cambio-motor.jpg
+
+ADMIN (panel de administracion):
+  Contrasena: gorilla2024
+  Puedes subir motos, fotos, productos y ver resenas
+
+===================================================
