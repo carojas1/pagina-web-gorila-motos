@@ -878,14 +878,69 @@ html { scroll-behavior: smooth; scroll-padding-top: 70px; }
   .rev-screenshots { flex-direction: column; }
 }
 @media (max-width: 600px) {
-  .container { padding: 0 20px; }
-  .sec { padding: 56px 0; }
-  .stat-item { padding: 0 24px; }
-  .admin-tabs { flex-wrap: wrap; }
-  .admin-body, .admin-panel-header { margin-left: 12px; margin-right: 12px; padding-left: 16px; padding-right: 16px; }
+  .container { padding: 0 16px; }
+  .sec { padding: 48px 0; }
+
+  /* Hero */
+  .hero-content { padding: 100px 16px 80px; }
+  .hero-logo-img { width: 90px; height: 90px; margin-bottom: 16px; }
+  .hero-title { font-size: clamp(2.2rem, 12vw, 4rem); letter-spacing: -1px; }
+  .hero-sub { font-size: .9rem; margin-bottom: 24px; }
+  .hero-ctas { gap: 10px; }
+  .hero-ctas .btn { padding: 12px 20px; font-size: 13px; }
+
+  /* Stats bar */
+  .stats-bar { padding-top: 24px; margin-top: 32px; gap: 0; justify-content: center; }
+  .stat-item { padding: 0 16px; }
+  .stat-num { font-size: 2.2rem; }
+  .stat-label { font-size: 8px; letter-spacing: 2px; }
+
+  /* Servicios */
+  .srv-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 28px; }
+  .srv-img-wrap { height: 160px; }
+
+  /* Galería */
+  .gale-grid-fixed {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, 200px);
+  }
+  .gale-hero { grid-column: 1; grid-row: 1; }
+  .gale-r1   { grid-column: 1; grid-row: 2; }
+  .gale-r2   { grid-column: 1; grid-row: 3; }
+
+  /* Productos */
+  .prod-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .prod-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
+
+  /* Reseñas */
+  .rev-screenshots { flex-direction: column; }
+  .rev-grid { grid-template-columns: 1fr; }
+  .rev-form-wrap { padding: 20px 16px; }
+  .form-grid-2 { grid-template-columns: 1fr; }
+
+  /* Motos en venta */
+  .moto-grid { grid-template-columns: 1fr; }
+
+  /* Contacto */
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-form-box { padding: 20px 16px; }
+
+  /* Barra de telemetría */
+  .tele-bar { font-size: 9px; }
+
+  /* Admin */
+  .admin-tabs { flex-wrap: wrap; gap: 4px; padding: 12px 12px 0; }
+  .a-tab { padding: 8px 14px; font-size: 11px; }
   .admin-body { margin: 0 12px; }
+  .admin-body > .a-content { padding: 16px; }
+  .admin-panel-header { padding: 12px 16px; }
   .a-form-grid { grid-template-columns: 1fr; }
   .a-full { grid-column: 1/-1; }
-  .form-grid-2 { grid-template-columns: 1fr; }
-  .hero-stat .stat-item { padding: 0 18px; }
+
+  /* WhatsApp flotante — más pequeño en móvil */
+  .wa-float { width: 48px; height: 48px; bottom: 16px; right: 16px; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  footer { padding: 36px 0 0; }
 }
