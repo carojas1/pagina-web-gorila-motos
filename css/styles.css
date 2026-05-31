@@ -847,59 +847,71 @@ html { scroll-behavior: smooth; scroll-padding-top: 70px; }
 @keyframes goldPulse { 0%,100%{text-shadow:0 0 20px var(--gold-glow),0 0 40px rgba(245,166,35,0.2)} 50%{text-shadow:0 0 6px rgba(245,166,35,0.3)} }
 
 /* ═══════════════════════════════════════════════
-   RESPONSIVO
+   RESPONSIVO — TABLET (≤ 900px)
    ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .nav-links, .nav-actions { display: none; }
   #hamburger { display: flex; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .contact-grid > *:last-child { display: none; }
+  .nav-inner { padding: 0 20px; }
 
-  /* Galería masonry: 2 columnas en tablet */
+  /* Galería: 2 columnas */
   .gale-grid-fixed {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 220px 220px 220px 220px;
   }
   .gale-hero { grid-column: 1 / 3; grid-row: 1 / 2; }
-  .gale-r1   { grid-column: 1; grid-row: 2; }
-  .gale-r2   { grid-column: 2; grid-row: 2; }
+  .gale-r1   { grid-column: 1;     grid-row: 2; }
+  .gale-r2   { grid-column: 2;     grid-row: 2; }
 
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  /* Contacto: apilado (sin ocultar el formulario) */
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+
+  /* Servicios: 2 cols */
+  .srv-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVO — MÓVIL (≤ 600px)
+   ═══════════════════════════════════════════════ */
 @media (max-width: 600px) {
-  /* Galería masonry: 1 columna en móvil */
-  .gale-grid-fixed {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, 200px);
-  }
-  .gale-hero { grid-column: 1; grid-row: 1; }
-  .gale-r1   { grid-column: 1; grid-row: 2; }
-  .gale-r2   { grid-column: 1; grid-row: 3; }
-  .rev-screenshots { flex-direction: column; }
-}
-@media (max-width: 600px) {
+  /* Base */
+  html, body { overflow-x: hidden; }
   .container { padding: 0 16px; }
   .sec { padding: 48px 0; }
 
-  /* Hero */
-  .hero-content { padding: 100px 16px 80px; }
-  .hero-logo-img { width: 90px; height: 90px; margin-bottom: 16px; }
-  .hero-title { font-size: clamp(2.2rem, 12vw, 4rem); letter-spacing: -1px; }
-  .hero-sub { font-size: .9rem; margin-bottom: 24px; }
-  .hero-ctas { gap: 10px; }
-  .hero-ctas .btn { padding: 12px 20px; font-size: 13px; }
+  /* Navbar */
+  .nav-inner { padding: 0 14px; gap: 10px; }
+  .nav-logo-txt { font-size: 1rem; letter-spacing: 1px; }
+  .nav-logo-img { width: 34px; height: 34px; }
 
-  /* Stats bar */
-  .stats-bar { padding-top: 24px; margin-top: 32px; gap: 0; justify-content: center; }
-  .stat-item { padding: 0 16px; }
-  .stat-num { font-size: 2.2rem; }
-  .stat-label { font-size: 8px; letter-spacing: 2px; }
+  /* Hero — fix de overflow por letter-spacing inline */
+  .hero-content { padding: 88px 16px 72px; }
+  .hero-logo-img { width: 80px; height: 80px; margin-bottom: 14px; }
+  .hero-gorila-txt { letter-spacing: 2px !important; font-size: clamp(2rem, 10vw, 3.5rem) !important; }
+  .hero-title { font-size: clamp(2rem, 11vw, 3.5rem); letter-spacing: -1px; }
+  .hero-sub { font-size: .88rem; margin-bottom: 20px; padding: 0 4px; }
+  .hero-badge-txt { font-size: 9px; letter-spacing: 2px; }
+  .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-ctas .btn { justify-content: center; padding: 13px 20px; font-size: 13px; }
 
-  /* Servicios */
-  .srv-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 28px; }
-  .srv-img-wrap { height: 160px; }
+  /* Stats: achicar para que quepan */
+  .stats-bar { padding-top: 20px; margin-top: 28px; }
+  .stat-item { padding: 0 12px; }
+  .stat-num { font-size: 2rem; }
+  .stat-suffix { font-size: 1.4rem; }
+  .stat-label { font-size: 7px; letter-spacing: 1px; }
 
-  /* Galería */
+  /* Secciones: encabezados */
+  .sec-title { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+
+  /* Servicios: 1 columna */
+  .srv-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 24px; }
+  .srv-img-wrap { height: 170px; }
+
+  /* Galería: 1 columna */
   .gale-grid-fixed {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, 200px);
@@ -908,39 +920,41 @@ html { scroll-behavior: smooth; scroll-padding-top: 70px; }
   .gale-r1   { grid-column: 1; grid-row: 2; }
   .gale-r2   { grid-column: 1; grid-row: 3; }
 
-  /* Productos */
-  .prod-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .prod-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 24px; }
+  /* Productos: 1 columna */
+  .prod-grid { grid-template-columns: 1fr; gap: 12px; }
+  .prod-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
 
   /* Reseñas */
   .rev-screenshots { flex-direction: column; }
   .rev-grid { grid-template-columns: 1fr; }
-  .rev-form-wrap { padding: 20px 16px; }
+  .rev-form-wrap { padding: 20px 14px; }
   .form-grid-2 { grid-template-columns: 1fr; }
 
-  /* Motos en venta */
+  /* Motos en venta: 1 columna */
   .moto-grid { grid-template-columns: 1fr; }
 
-  /* Contacto */
-  .contact-grid { grid-template-columns: 1fr; }
-  .contact-form-box { padding: 20px 16px; }
+  /* Contacto: apilado */
+  .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+  .contact-form-box { padding: 20px 14px; }
 
-  /* Barra de telemetría */
-  .tele-bar { font-size: 9px; }
+  /* Telemetría */
+  .tele-bar { height: 28px; }
+  .tele-inner { font-size: 9px; letter-spacing: 1px; }
 
-  /* Admin */
-  .admin-tabs { flex-wrap: wrap; gap: 4px; padding: 12px 12px 0; }
-  .a-tab { padding: 8px 14px; font-size: 11px; }
-  .admin-body { margin: 0 12px; }
-  .admin-body > .a-content { padding: 16px; }
-  .admin-panel-header { padding: 12px 16px; }
+  /* Admin panel */
+  .admin-tabs { flex-wrap: wrap; gap: 4px; padding: 12px 10px 0; }
+  .a-tab { padding: 7px 12px; font-size: 11px; }
+  .admin-body { margin: 0 10px; }
+  .a-content { padding: 16px 12px; }
+  .admin-panel-header { padding: 12px 14px; }
+  .admin-panel-title { font-size: .9rem; }
   .a-form-grid { grid-template-columns: 1fr; }
   .a-full { grid-column: 1/-1; }
 
-  /* WhatsApp flotante — más pequeño en móvil */
-  .wa-float { width: 48px; height: 48px; bottom: 16px; right: 16px; }
+  /* WhatsApp flotante */
+  .wa-float { width: 50px; height: 50px; bottom: 14px; right: 14px; }
 
   /* Footer */
-  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-  footer { padding: 36px 0 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; }
+  footer { padding: 32px 0 0; }
 }
