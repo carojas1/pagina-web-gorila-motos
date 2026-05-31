@@ -61,7 +61,7 @@ if (contactoForm) {
       + '%0AMoto:+'      + encodeURIComponent(m)
       + '%0AMensaje:+'   + encodeURIComponent(msg)
       + '%0ATel:+'       + encodeURIComponent(t);
-    window.open('https://wa.me/593098083436?text=' + txt, '_blank');
+    window.open('https://wa.me/593980834367?text=' + txt, '_blank');
     showOk('fSuccess');
     this.reset();
     setTimeout(function () { hideEl('fSuccess'); }, 5000);

@@ -171,7 +171,7 @@ function renderVentasGrid() {
         +   (m.desc ? '<p class="moto-desc">' + esc(m.desc) + '</p>' : '')
         +   '<div class="moto-footer">'
         +     '<div class="moto-price">' + esc(m.precio) + '</div>'
-        +     '<button class="moto-cta" onclick="window.open(\'https://wa.me/593098083436?text=' + wa + '\',\'_blank\')">CONSULTAR</button>'
+        +     '<button class="moto-cta" onclick="window.open(\'https://wa.me/593980834367?text=' + wa + '\',\'_blank\')">CONSULTAR</button>'
         +   '</div></div>';
       grid.appendChild(card);
       if (typeof io !== 'undefined') io.observe(card);
@@ -336,7 +336,7 @@ function renderProductosGrid() {
         +   (p.desc ? '<p class="prod-desc">' + esc(p.desc) + '</p>' : '')
         +   '<div class="prod-footer">'
         +     '<div class="prod-price">' + esc(p.precio) + '</div>'
-        +     '<button class="prod-buy" onclick="window.open(\'https://wa.me/593098083436?text=' + wa + '\',\'_blank\')">COMPRAR</button>'
+        +     '<button class="prod-buy" onclick="window.open(\'https://wa.me/593980834367?text=' + wa + '\',\'_blank\')">COMPRAR</button>'
         +   '</div></div>';
       grid.appendChild(card);
       if (typeof io !== 'undefined') io.observe(card);
