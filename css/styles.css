@@ -215,7 +215,7 @@ button { font-family: var(--font-b); }
 /* ═══════════════════════════════════════════════
    LAYOUT SECCIONES
    ═══════════════════════════════════════════════ */
-.sec { padding: 110px 0; }
+.sec { padding: 100px 0; }
 .sec-alt { background: #0d0d0d; }
 .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
 .sec-label {
@@ -321,7 +321,7 @@ button { font-family: var(--font-b); }
    ═══════════════════════════════════════════════ */
 .srv-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px; margin-top: 56px;
 }
 .srv-card {
@@ -352,7 +352,7 @@ button { font-family: var(--font-b); }
 .gale-grid-fixed {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 320px 320px 240px;
+  grid-template-rows: 290px 290px 220px;
   gap: 12px;
   margin-top: 56px;
 }
@@ -389,7 +389,7 @@ button { font-family: var(--font-b); }
 .prod-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }
 .prod-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 24px;
 }
 .prod-card { background: var(--bg2); border: 1px solid var(--bg4); overflow: hidden; transition: border-color .3s, transform .3s; }
@@ -412,7 +412,7 @@ button { font-family: var(--font-b); }
 /* ═══════════════════════════════════════════════
    RESEÑAS
    ═══════════════════════════════════════════════ */
-.rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; margin-bottom: 64px; }
+.rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; margin-bottom: 56px; }
 .rev-card { background: var(--bg2); border: 1px solid var(--border); padding: 24px; transition: border-color .3s; }
 .rev-card:hover { border-color: var(--red-dim); }
 .rev-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
@@ -460,7 +460,7 @@ button { font-family: var(--font-b); }
 /* ═══════════════════════════════════════════════
    MOTOS EN VENTA
    ═══════════════════════════════════════════════ */
-.moto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 32px; margin-top: 32px; }
+.moto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; }
 .moto-card { background: var(--bg2); border: 1px solid var(--bg4); overflow: hidden; transition: border-color .3s, transform .3s, box-shadow .3s; }
 .moto-card:hover { border-color: var(--red); transform: translateY(-4px); box-shadow: 0 12px 40px -10px rgba(192,0,0,0.28); }
 .moto-img-wrap { position: relative; overflow: hidden; aspect-ratio: 16/10; background: #1a0505; cursor: zoom-in; }
@@ -501,7 +501,7 @@ textarea.inp { resize: none; }
 /* ═══════════════════════════════════════════════
    CONTACTO
    ═══════════════════════════════════════════════ */
-.contact-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
 .contact-info { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
 .contact-item { display: flex; gap: 14px; }
 .contact-icon { color: var(--red); font-size: 22px; flex-shrink: 0; margin-top: 2px; }

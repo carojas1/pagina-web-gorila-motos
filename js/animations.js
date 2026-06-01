@@ -117,10 +117,10 @@ setInterval(function () {
 /* ─────────────────────────────────────────────
    PARALLAX HÉROE
    ───────────────────────────────────────────── */
-var heroBg = document.getElementById('heroBg');
-if (heroBg) {
-  gsap.to(heroBg, {
-    yPercent: 30,
+var heroBgImg = document.querySelector('.hero-bg-img');
+if (heroBgImg) {
+  gsap.to(heroBgImg, {
+    yPercent: 18,
     ease: "none",
     scrollTrigger: {
       trigger: "#inicio",
