@@ -119,12 +119,16 @@ setInterval(function () {
    ───────────────────────────────────────────── */
 var heroBg = document.getElementById('heroBg');
 if (heroBg) {
-  window.addEventListener('scroll', function () {
-    var s = window.scrollY;
-    if (s < window.innerHeight) {
-      heroBg.style.transform = 'translate3d(0,' + (s * 0.36) + 'px,0) scale(' + (1.08 + s * 0.00004) + ')';
+  gsap.to(heroBg, {
+    yPercent: 30,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "#inicio",
+      start: "top top",
+      end: "bottom top",
+      scrub: true
     }
-  }, { passive: true });
+  });
 }
 
 /* ─────────────────────────────────────────────
