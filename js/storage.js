@@ -106,7 +106,6 @@ function gmRefresh(cb) {
       GM_CACHE.gale = data.gale || [];
       GM_CACHE.productos = data.productos || [];
       GM_CACHE.reviews = data.reviews || [];
-      gmUseDefaultsIfEmpty();
       if (cb) cb();
     })
     .catch(function (err) {
@@ -151,6 +150,10 @@ function gmAuthAdmin(pass, cb) {
 
 function gmSave(store, item, cb) {
   gmAdminRequest('save', { store: store, item: item }, cb);
+}
+
+function gmUpdate(store, id, item, cb) {
+  gmAdminRequest('update', { store: store, id: id, item: item }, cb);
 }
 
 function gmDelete(store, id, cb) {

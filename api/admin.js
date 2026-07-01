@@ -1,6 +1,7 @@
 const {
   TABLES,
   adminPassword,
+  deleteStoragePaths,
   fail,
   getMaxSort,
   listTable,
@@ -8,6 +9,7 @@ const {
   readJson,
   rest,
   send,
+  storagePathFromUrl,
   uploadImage,
 } = require('./_supabase');
 
@@ -75,9 +77,59 @@ async function saveItem(body) {
 async function deleteItem(body) {
   const table = TABLES[body.store];
   if (!table) throw Object.assign(new Error('Store no valido.'), { status: 400 });
+  const rows = await rest(`${table}?select=*&id=eq.${encodeURIComponent(body.id)}`, {
+    method: 'GET',
+    prefer: 'return=minimal',
+  });
+  const paths = [];
+  for (const row of rows || []) {
+    paths.push(storagePathFromUrl(row.image_url));
+    if (Array.isArray(row.image_urls)) {
+      row.image_urls.forEach((url) => paths.push(storagePathFromUrl(url)));
+    }
+  }
   await rest(`${table}?id=eq.${encodeURIComponent(body.id)}`, {
     method: 'DELETE',
     prefer: 'return=minimal',
+  });
+  await deleteStoragePaths(paths);
+}
+
+async function updateItem(body) {
+  const table = TABLES[body.store];
+  const item = body.item || {};
+  if (!table || body.store === 'reviews') throw Object.assign(new Error('Store no valido.'), { status: 400 });
+
+  let payload = {};
+  if (body.store === 'motos') {
+    payload = {
+      title: String(item.marca || '').trim(),
+      year: String(item.anio || '').trim(),
+      price: String(item.precio || '').trim(),
+      mileage: String(item.km || '').trim(),
+      description: String(item.desc || '').trim(),
+    };
+  } else if (body.store === 'productos') {
+    payload = {
+      title: String(item.nombre || '').trim(),
+      price: String(item.precio || '').trim(),
+      description: String(item.desc || '').trim(),
+    };
+  } else if (body.store === 'gale') {
+    payload = {
+      title: String(item.title || '').trim(),
+      category: String(item.cat || '').trim(),
+    };
+  }
+
+  Object.keys(payload).forEach((key) => {
+    if (payload[key] === '') delete payload[key];
+  });
+  if (!Object.keys(payload).length) return;
+
+  await rest(`${table}?id=eq.${encodeURIComponent(body.id)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
   });
 }
 
@@ -124,6 +176,7 @@ module.exports = async function handler(req, res) {
 
     if (body.action === 'auth') return send(res, 200, { ok: true });
     if (body.action === 'save') await saveItem(body);
+    else if (body.action === 'update') await updateItem(body);
     else if (body.action === 'delete') await deleteItem(body);
     else if (body.action === 'move') await moveItem(body);
     else if (body.action === 'approveReview') await approveReview(body);

@@ -65,6 +65,10 @@ function orderButtons(store, id) {
     + '<button class="admin-mini" onclick="moveItem(\'' + store + '\',' + id + ',1)" title="Bajar">↓</button>';
 }
 
+function editButton(fn, id) {
+  return '<button class="admin-mini admin-edit" onclick="' + fn + '(' + id + ')" title="Editar">EDITAR</button>';
+}
+
 function moveItem(store, id, direction) {
   gmMove(store, id, direction, function () {
     renderAdminMotos();
@@ -73,6 +77,12 @@ function moveItem(store, id, direction) {
     renderVentasGrid();
     renderGaleriaAdmin();
     renderProductosGrid();
+  });
+}
+
+function findById(store, id, cb) {
+  gmGetAll(store, function (items) {
+    cb(items.find(function (item) { return Number(item.id) === Number(id); }));
   });
 }
 
@@ -173,6 +183,26 @@ function deleteMoto(id) {
   });
 }
 
+function editMoto(id) {
+  findById('motos', id, function (m) {
+    if (!m) return;
+    var marca = prompt('Marca y modelo:', m.marca || '');
+    if (marca === null) return;
+    var anio = prompt('Año:', m.anio || '');
+    if (anio === null) return;
+    var precio = prompt('Precio:', m.precio || '');
+    if (precio === null) return;
+    var km = prompt('Kilometraje:', m.km || '');
+    if (km === null) return;
+    var desc = prompt('Descripcion:', m.desc || '');
+    if (desc === null) return;
+    gmUpdate('motos', id, { marca: marca, anio: anio, precio: precio, km: km, desc: desc }, function () {
+      renderAdminMotos();
+      renderVentasGrid();
+    });
+  });
+}
+
 function renderAdminMotos() {
   var c = $id('aMotos'); if (!c) return;
   gmGetAll('motos', function (motos) {
@@ -186,7 +216,7 @@ function renderAdminMotos() {
         thumbClick: img ? 'openLbSrc(\'' + img + '\',\'' + esc(m.marca) + '\')' : '',
         name: m.marca + (m.anio ? ' ' + m.anio : ''),
         sub: m.precio + (m.km ? ' - ' + m.km : ''),
-        actions: orderButtons('motos', m.id),
+        actions: editButton('editMoto', m.id) + orderButtons('motos', m.id),
         delFn: 'deleteMoto(' + m.id + ')'
       });
     }).join('');
@@ -259,6 +289,20 @@ function deleteGale(id) {
   });
 }
 
+function editGale(id) {
+  findById('gale', id, function (g) {
+    if (!g) return;
+    var title = prompt('Titulo:', g.title || '');
+    if (title === null) return;
+    var cat = prompt('Categoria:', g.cat || 'galeria');
+    if (cat === null) return;
+    gmUpdate('gale', id, { title: title, cat: cat }, function () {
+      renderAdminGale();
+      renderGaleriaAdmin();
+    });
+  });
+}
+
 function renderAdminGale() {
   var c = $id('aGale'); if (!c) return;
   gmGetAll('gale', function (gale) {
@@ -271,7 +315,7 @@ function renderAdminGale() {
         thumbClick: 'openLbSrc(\'' + g.foto + '\',\'' + esc(g.title) + '\')',
         name: g.title,
         sub: (g.cat || 'galeria').toUpperCase(),
-        actions: orderButtons('gale', g.id),
+        actions: editButton('editGale', g.id) + orderButtons('gale', g.id),
         delFn: 'deleteGale(' + g.id + ')'
       });
     }).join('');
@@ -335,6 +379,22 @@ function deleteProducto(id) {
   });
 }
 
+function editProducto(id) {
+  findById('productos', id, function (p) {
+    if (!p) return;
+    var nombre = prompt('Nombre del producto:', p.nombre || '');
+    if (nombre === null) return;
+    var precio = prompt('Precio:', p.precio || '');
+    if (precio === null) return;
+    var desc = prompt('Descripcion:', p.desc || '');
+    if (desc === null) return;
+    gmUpdate('productos', id, { nombre: nombre, precio: precio, desc: desc }, function () {
+      renderAdminProductos();
+      renderProductosGrid();
+    });
+  });
+}
+
 function renderAdminProductos() {
   var c = $id('aProductos'); if (!c) return;
   gmGetAll('productos', function (prods) {
@@ -347,7 +407,7 @@ function renderAdminProductos() {
         thumbClick: p.foto ? 'openLbSrc(\'' + p.foto + '\',\'' + esc(p.nombre) + '\')' : '',
         name: p.nombre,
         sub: p.precio,
-        actions: orderButtons('productos', p.id),
+        actions: editButton('editProducto', p.id) + orderButtons('productos', p.id),
         delFn: 'deleteProducto(' + p.id + ')'
       });
     }).join('');

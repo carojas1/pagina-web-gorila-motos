@@ -134,6 +134,27 @@ async function uploadImage(dataUrl, folder) {
   return `${supabaseUrl()}/storage/v1/object/public/${BUCKET}/${name}`;
 }
 
+function storagePathFromUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  const marker = `/storage/v1/object/public/${BUCKET}/`;
+  const index = url.indexOf(marker);
+  if (index < 0) return null;
+  return decodeURIComponent(url.slice(index + marker.length));
+}
+
+async function deleteStoragePaths(paths) {
+  const unique = [...new Set((paths || []).filter(Boolean))];
+  if (!unique.length) return;
+  const response = await fetch(`${supabaseUrl()}/storage/v1/object/${BUCKET}`, {
+    method: 'DELETE',
+    headers: headers({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ prefixes: unique }),
+  });
+  if (!response.ok) {
+    console.warn('No se pudieron borrar algunos archivos del storage:', await response.text());
+  }
+}
+
 function normalizeProduct(row) {
   return {
     id: row.id,
@@ -195,5 +216,7 @@ module.exports = {
   rest,
   send,
   supabaseUrl,
+  deleteStoragePaths,
+  storagePathFromUrl,
   uploadImage,
 };
