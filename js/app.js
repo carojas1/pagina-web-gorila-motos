@@ -27,6 +27,28 @@ function closeLb() {
   if (lb) lb.classList.remove('open');
 }
 
+function renderSiteSettings() {
+  if (typeof gmGetSettings !== 'function') return;
+  var s = gmGetSettings();
+  var phoneDisplay = s.phone_display || '098 083 4367';
+  var phoneWa = (s.phone_wa || '').replace(/\D/g, '') || '593980834367';
+  var email = s.email || 'gorilamotos2026@gmail.com';
+  var telHref = 'tel:' + phoneDisplay.replace(/\D/g, '');
+  var waHref = 'https://wa.me/' + phoneWa;
+
+  document.querySelectorAll('[data-gm-phone]').forEach(function (el) { el.textContent = phoneDisplay; });
+  document.querySelectorAll('[data-gm-phone-link]').forEach(function (el) { el.href = telHref; });
+  document.querySelectorAll('[data-gm-whatsapp-link]').forEach(function (el) { el.href = waHref; });
+  document.querySelectorAll('[data-gm-email]').forEach(function (el) { el.textContent = email; });
+  document.querySelectorAll('[data-gm-email-link]').forEach(function (el) { el.href = 'mailto:' + email; });
+  document.querySelectorAll('[data-gm-address]').forEach(function (el) { el.textContent = s.address_line1 || ''; });
+  document.querySelectorAll('[data-gm-city]').forEach(function (el) { el.textContent = s.address_city || 'Cuenca, Ecuador'; });
+  document.querySelectorAll('[data-gm-maps-url]').forEach(function (el) { el.href = s.maps_url || '#'; });
+  document.querySelectorAll('[data-gm-hours-week]').forEach(function (el) { el.textContent = s.hours_week || ''; });
+  document.querySelectorAll('[data-gm-hours-sat]').forEach(function (el) { el.textContent = s.hours_sat || ''; });
+  document.querySelectorAll('[data-gm-portal-url]').forEach(function (el) { el.href = s.portal_url || '#'; });
+}
+
 function setStar(n) {
   var hidden = document.getElementById('revEstrellas');
   if (hidden) hidden.value = n;
@@ -51,7 +73,9 @@ if (contactoForm) {
       + '%0AMoto:+' + encodeURIComponent(m)
       + '%0AMensaje:+' + encodeURIComponent(msg)
       + '%0ATel:+' + encodeURIComponent(t);
-    window.open('https://wa.me/593980834367?text=' + txt, '_blank');
+    var settings = typeof gmGetSettings === 'function' ? gmGetSettings() : {};
+    var waPhone = ((settings.phone_wa || '') + '').replace(/\D/g, '') || '593980834367';
+    window.open('https://wa.me/' + waPhone + '?text=' + txt, '_blank');
     showOk('fSuccess');
     this.reset();
     setTimeout(function () { hideEl('fSuccess'); }, 5000);
@@ -113,6 +137,7 @@ function showReviewFileName(input) {
 
 window.addEventListener('DOMContentLoaded', function () {
   gmInitDB(function () {
+    renderSiteSettings();
     renderServiciosGrid();
     renderVentasGrid();
     renderGaleriaAdmin();

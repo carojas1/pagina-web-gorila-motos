@@ -171,6 +171,31 @@ async function updateItem(body) {
   });
 }
 
+async function updateSettings(body) {
+  const allowed = [
+    'phone_display',
+    'phone_wa',
+    'email',
+    'address_line1',
+    'address_city',
+    'maps_url',
+    'hours_week',
+    'hours_sat',
+    'portal_url',
+  ];
+  const settings = body.settings || {};
+  const rows = allowed.map((key, index) => ({
+    key,
+    value: String(settings[key] || '').trim(),
+    sort_order: index + 1,
+  }));
+  await rest('gm_settings', {
+    method: 'POST',
+    headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify(rows),
+  });
+}
+
 async function moveItem(body) {
   const table = TABLES[body.store];
   if (!table || body.store === 'reviews') throw Object.assign(new Error('Store no valido.'), { status: 400 });
@@ -217,6 +242,7 @@ module.exports = async function handler(req, res) {
     else if (body.action === 'update') await updateItem(body);
     else if (body.action === 'delete') await deleteItem(body);
     else if (body.action === 'clearAll') await clearDynamicData();
+    else if (body.action === 'settings') await updateSettings(body);
     else if (body.action === 'move') await moveItem(body);
     else if (body.action === 'approveReview') await approveReview(body);
     else if (body.action === 'listReviews') return send(res, 200, { ok: true, reviews: await listReviews() });

@@ -122,6 +122,7 @@ function checkAdmin() {
 function openAdminPanel() {
   $id('adminPanel').classList.add('open');
   gsap.from($id('adminPanel'), { opacity: 0, y: 20, duration: 0.4 });
+  renderAdminSettings();
   renderAdminServicios();
   renderAdminMotos();
   renderAdminGale();
@@ -159,6 +160,38 @@ function switchAdminTab(tab, btn) {
   document.querySelectorAll('.a-content').forEach(function (c) { c.classList.remove('active'); });
   btn.classList.add('active');
   $id('a-' + tab).classList.add('active');
+}
+
+/* DATOS LOCAL */
+function renderAdminSettings() {
+  if (typeof gmGetSettings !== 'function') return;
+  var s = gmGetSettings();
+  $val('setPhoneDisplay', s.phone_display || '');
+  $val('setPhoneWa', s.phone_wa || '');
+  $val('setEmail', s.email || '');
+  $val('setPortal', s.portal_url || '');
+  $val('setAddress1', s.address_line1 || '');
+  $val('setCity', s.address_city || '');
+  $val('setMaps', s.maps_url || '');
+  $val('setHoursWeek', s.hours_week || '');
+  $val('setHoursSat', s.hours_sat || '');
+}
+
+function saveAdminSettings() {
+  gmSaveSettings({
+    phone_display: ($id('setPhoneDisplay').value || '').trim(),
+    phone_wa: ($id('setPhoneWa').value || '').trim(),
+    email: ($id('setEmail').value || '').trim(),
+    portal_url: ($id('setPortal').value || '').trim(),
+    address_line1: ($id('setAddress1').value || '').trim(),
+    address_city: ($id('setCity').value || '').trim(),
+    maps_url: ($id('setMaps').value || '').trim(),
+    hours_week: ($id('setHoursWeek').value || '').trim(),
+    hours_sat: ($id('setHoursSat').value || '').trim()
+  }, function () {
+    renderAdminSettings();
+    if (typeof renderSiteSettings === 'function') renderSiteSettings();
+  });
 }
 
 /* SERVICIOS */

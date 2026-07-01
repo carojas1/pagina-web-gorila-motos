@@ -8,7 +8,20 @@ var GM_CACHE = {
   motos: [],
   gale: [],
   productos: [],
-  reviews: []
+  reviews: [],
+  settings: {}
+};
+
+var GM_DEFAULT_SETTINGS = {
+  phone_display: '098 083 4367',
+  phone_wa: '593980834367',
+  email: 'gorilamotos2026@gmail.com',
+  address_line1: 'Camilo Ponce, Medardo A. Silva y Angel Silva 1-666',
+  address_city: 'Cuenca, Ecuador',
+  maps_url: 'https://maps.app.goo.gl/QV1vPwvi9QBQDZM46',
+  hours_week: '8:30-13:30 & 15:00-18:00',
+  hours_sat: '9:00-14:00',
+  portal_url: 'https://gmotors-frontend.vercel.app/'
 };
 
 var GM_DEFAULT_DATA = {
@@ -66,6 +79,7 @@ function gmRefresh(cb) {
       GM_CACHE.gale = data.gale || [];
       GM_CACHE.productos = data.productos || [];
       GM_CACHE.reviews = data.reviews || [];
+      GM_CACHE.settings = Object.assign({}, GM_DEFAULT_SETTINGS, data.settings || {});
       if (cb) cb();
     })
     .catch(function (err) {
@@ -81,6 +95,10 @@ function gmInitDB(cb) {
 
 function gmGetAll(store, cb) {
   cb((GM_CACHE[store] || []).slice());
+}
+
+function gmGetSettings() {
+  return Object.assign({}, GM_DEFAULT_SETTINGS, GM_CACHE.settings || {});
 }
 
 function gmAdminRequest(action, payload, cb) {
@@ -122,6 +140,10 @@ function gmDelete(store, id, cb) {
 
 function gmMove(store, id, direction, cb) {
   gmAdminRequest('move', { store: store, id: id, direction: direction }, cb);
+}
+
+function gmSaveSettings(settings, cb) {
+  gmAdminRequest('settings', { settings: settings }, cb);
 }
 
 function gmApproveReview(id, approved, cb) {

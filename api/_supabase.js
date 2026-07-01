@@ -4,6 +4,7 @@ const TABLES = {
   productos: 'gm_products',
   gale: 'gm_gallery',
   reviews: 'gm_reviews',
+  settings: 'gm_settings',
 };
 
 const BUCKET = 'gorila-media';
@@ -213,6 +214,14 @@ function normalizeReview(row) {
   };
 }
 
+function normalizeSettings(rows) {
+  const settings = {};
+  for (const row of rows || []) {
+    settings[row.key] = row.value;
+  }
+  return settings;
+}
+
 module.exports = {
   TABLES,
   BUCKET,
@@ -225,6 +234,7 @@ module.exports = {
   normalizeProduct,
   normalizeService,
   normalizeReview,
+  normalizeSettings,
   readJson,
   rest,
   send,
