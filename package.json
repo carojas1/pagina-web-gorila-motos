@@ -1,0 +1,12 @@
+{
+  "name": "pagina-web-gorila-motos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "setup:supabase": "node scripts/setup-supabase.mjs"
+  },
+  "devDependencies": {
+    "pg": "^8.16.3"
+  }
+}

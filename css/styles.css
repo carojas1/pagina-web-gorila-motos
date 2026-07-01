@@ -27,6 +27,77 @@
   --font-m:    'JetBrains Mono', monospace;
 }
 
+/* Cloud/admin controls */
+.rev-user-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  margin: 0 0 14px;
+  cursor: zoom-in;
+  filter: grayscale(10%);
+}
+.review-upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.review-upload-btn {
+  padding: 11px 18px;
+  font-size: 12px;
+}
+.review-file-name {
+  font-family: var(--font-m);
+  font-size: 10px;
+  color: var(--txt3);
+  letter-spacing: 1px;
+  max-width: 260px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.admin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.admin-mini,
+.admin-ok {
+  font-family: var(--font-h);
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--txt2);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.admin-mini:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.admin-ok {
+  border-color: #2f8f46;
+  color: #5dd47a;
+}
+.admin-ok:hover {
+  background: #2f8f46;
+  color: #fff;
+}
+.admin-approved {
+  font-family: var(--font-m);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #5dd47a;
+  border: 1px solid rgba(93,212,122,.25);
+  padding: 6px 10px;
+}
+
 /* ── Reset base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
