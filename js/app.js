@@ -113,6 +113,7 @@ function showReviewFileName(input) {
 
 window.addEventListener('DOMContentLoaded', function () {
   gmInitDB(function () {
+    renderServiciosGrid();
     renderVentasGrid();
     renderGaleriaAdmin();
     renderProductosGrid();

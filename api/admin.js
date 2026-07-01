@@ -39,6 +39,16 @@ async function createPayload(store, item) {
       active: true,
     };
   }
+  if (store === 'servicios') {
+    return {
+      title: String(item.nombre || '').trim(),
+      price: String(item.precio || '').trim(),
+      description: String(item.desc || '').trim(),
+      image_url: item.foto ? await uploadImage(item.foto, 'services') : null,
+      sort_order: sortOrder,
+      active: true,
+    };
+  }
   if (store === 'productos') {
     return {
       title: String(item.nombre || '').trim(),
@@ -65,7 +75,7 @@ async function saveItem(body) {
   const { store, item } = body;
   if (!TABLES[store] || store === 'reviews') throw Object.assign(new Error('Store no valido.'), { status: 400 });
   const payload = await createPayload(store, item || {});
-  if ((store === 'motos' || store === 'productos') && (!payload.title || !payload.price)) {
+  if ((store === 'motos' || store === 'productos' || store === 'servicios') && (!payload.title || !payload.price)) {
     throw Object.assign(new Error('Faltan nombre y precio.'), { status: 400 });
   }
   if (store === 'gale' && !payload.image_url) {
@@ -95,6 +105,28 @@ async function deleteItem(body) {
   await deleteStoragePaths(paths);
 }
 
+async function clearDynamicData() {
+  for (const store of ['productos', 'motos', 'gale', 'reviews']) {
+    const table = TABLES[store];
+    const rows = await rest(`${table}?select=*`, {
+      method: 'GET',
+      prefer: 'return=minimal',
+    });
+    const paths = [];
+    for (const row of rows || []) {
+      paths.push(storagePathFromUrl(row.image_url));
+      if (Array.isArray(row.image_urls)) {
+        row.image_urls.forEach((url) => paths.push(storagePathFromUrl(url)));
+      }
+    }
+    await rest(`${table}?id=gt.0`, {
+      method: 'DELETE',
+      prefer: 'return=minimal',
+    });
+    await deleteStoragePaths(paths);
+  }
+}
+
 async function updateItem(body) {
   const table = TABLES[body.store];
   const item = body.item || {};
@@ -110,6 +142,12 @@ async function updateItem(body) {
       description: String(item.desc || '').trim(),
     };
   } else if (body.store === 'productos') {
+    payload = {
+      title: String(item.nombre || '').trim(),
+      price: String(item.precio || '').trim(),
+      description: String(item.desc || '').trim(),
+    };
+  } else if (body.store === 'servicios') {
     payload = {
       title: String(item.nombre || '').trim(),
       price: String(item.precio || '').trim(),
@@ -178,6 +216,7 @@ module.exports = async function handler(req, res) {
     if (body.action === 'save') await saveItem(body);
     else if (body.action === 'update') await updateItem(body);
     else if (body.action === 'delete') await deleteItem(body);
+    else if (body.action === 'clearAll') await clearDynamicData();
     else if (body.action === 'move') await moveItem(body);
     else if (body.action === 'approveReview') await approveReview(body);
     else if (body.action === 'listReviews') return send(res, 200, { ok: true, reviews: await listReviews() });

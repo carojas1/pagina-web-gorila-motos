@@ -4,6 +4,7 @@
    ================================================================ */
 
 var GM_CACHE = {
+  servicios: [],
   motos: [],
   gale: [],
   productos: [],
@@ -11,51 +12,9 @@ var GM_CACHE = {
 };
 
 var GM_DEFAULT_DATA = {
-  motos: [
-    {
-      id: 20001,
-      marca: 'Varias Marcas',
-      anio: '2023',
-      precio: 'Consultar',
-      km: 'Varios modelos',
-      desc: 'Variedad de motos disponibles. Todas inspeccionadas y certificadas por nuestro taller.',
-      fotos: ['fotos/venta-varias.png']
-    },
-    {
-      id: 20002,
-      marca: 'KRG',
-      anio: '2022',
-      precio: 'Consultar',
-      km: 'Bajo kilometraje',
-      desc: 'Motos KRG en excelente estado. Revisadas y certificadas por Gorila Motos.',
-      fotos: ['fotos/venta-krg.png']
-    },
-    {
-      id: 20003,
-      marca: 'Royal Enfield',
-      anio: '2021',
-      precio: 'Consultar',
-      km: 'Motor perfecto',
-      desc: 'Royal Enfield clasica negra. Motor en perfecto estado, papeles al dia.',
-      fotos: ['fotos/venta-royal.png']
-    }
-  ],
-  productos: [
-    {
-      id: 30001,
-      nombre: 'Pastillas de Freno',
-      precio: 'Consultar',
-      desc: 'Para todas las marcas. Originales y alternativas de calidad.',
-      foto: 'fotos/prod-pastillas.png'
-    },
-    {
-      id: 30002,
-      nombre: 'Partes para Motor',
-      precio: 'Consultar',
-      desc: 'Pistones, segmentos, cojinetes y mas. Originales y alternativas.',
-      foto: 'fotos/prod-partes.png'
-    }
-  ],
+  servicios: [],
+  motos: [],
+  productos: [],
   gale: [],
   reviews: []
 };
@@ -103,6 +62,7 @@ function gmRefresh(cb) {
   gmApi('/api/data')
     .then(function (data) {
       GM_CACHE.motos = data.motos || [];
+      GM_CACHE.servicios = data.servicios || [];
       GM_CACHE.gale = data.gale || [];
       GM_CACHE.productos = data.productos || [];
       GM_CACHE.reviews = data.reviews || [];

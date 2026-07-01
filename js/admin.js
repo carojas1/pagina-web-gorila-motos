@@ -7,6 +7,7 @@ var PASS = 'gorilla2024';
 var motosFotos = [];
 var galeFoto = null;
 var prodFotoData = null;
+var srvFotoData = null;
 
 function $id(id) { return document.getElementById(id); }
 function $val(id, v) { var e = $id(id); if (e) e.value = v; }
@@ -61,8 +62,8 @@ function adminItem(opts) {
 }
 
 function orderButtons(store, id) {
-  return '<button class="admin-mini" onclick="moveItem(\'' + store + '\',' + id + ',-1)" title="Subir">↑</button>'
-    + '<button class="admin-mini" onclick="moveItem(\'' + store + '\',' + id + ',1)" title="Bajar">↓</button>';
+  return '<button class="admin-mini" onclick="moveItem(\'' + store + '\',' + id + ',-1)" title="Subir">Subir</button>'
+    + '<button class="admin-mini" onclick="moveItem(\'' + store + '\',' + id + ',1)" title="Bajar">Bajar</button>';
 }
 
 function editButton(fn, id) {
@@ -71,9 +72,11 @@ function editButton(fn, id) {
 
 function moveItem(store, id, direction) {
   gmMove(store, id, direction, function () {
+    renderAdminServicios();
     renderAdminMotos();
     renderAdminGale();
     renderAdminProductos();
+    renderServiciosGrid();
     renderVentasGrid();
     renderGaleriaAdmin();
     renderProductosGrid();
@@ -119,6 +122,7 @@ function checkAdmin() {
 function openAdminPanel() {
   $id('adminPanel').classList.add('open');
   gsap.from($id('adminPanel'), { opacity: 0, y: 20, duration: 0.4 });
+  renderAdminServicios();
   renderAdminMotos();
   renderAdminGale();
   renderAdminProductos();
@@ -127,10 +131,27 @@ function openAdminPanel() {
 
 function closeAdminPanel() {
   $id('adminPanel').classList.remove('open');
+  renderServiciosGrid();
   renderVentasGrid();
   renderGaleriaAdmin();
   renderProductosGrid();
   renderPublicReviews();
+}
+
+function clearAllCloudData() {
+  if (!confirm('Borrar todas las pruebas subidas? Esto elimina motos, productos, fotos de galeria y resenas.')) return;
+  gmAdminRequest('clearAll', {}, function () {
+    renderAdminServicios();
+    renderAdminMotos();
+    renderAdminGale();
+    renderAdminProductos();
+    renderAdminReviews();
+    renderServiciosGrid();
+    renderVentasGrid();
+    renderGaleriaAdmin();
+    renderProductosGrid();
+    renderPublicReviews();
+  });
 }
 
 function switchAdminTab(tab, btn) {
@@ -138,6 +159,110 @@ function switchAdminTab(tab, btn) {
   document.querySelectorAll('.a-content').forEach(function (c) { c.classList.remove('active'); });
   btn.classList.add('active');
   $id('a-' + tab).classList.add('active');
+}
+
+/* SERVICIOS */
+function prevSrvFoto(input) {
+  srvFotoData = null; $html('sPrev', '');
+  if (!input.files[0]) return;
+  readImg(input.files[0], function (d) {
+    srvFotoData = d;
+    var prev = $id('sPrev'); if (!prev) return;
+    var img = document.createElement('img');
+    img.src = d;
+    img.style.cssText = 'width:80px;height:60px;object-fit:cover;border:1px solid #222';
+    prev.appendChild(img);
+  });
+}
+
+function addServicio() {
+  var nombre = $id('sNombre').value.trim();
+  var precio = $id('sPrecio').value.trim();
+  if (!nombre || !precio) { alert('Completa Servicio y Precio'); return; }
+  gmSave('servicios', {
+    nombre: nombre,
+    precio: precio,
+    desc: $id('sDesc').value.trim(),
+    foto: srvFotoData
+  }, function () {
+    ['sNombre', 'sPrecio', 'sDesc'].forEach(function (id) { $val(id, ''); });
+    $html('sPrev', ''); $val('sFoto', '');
+    srvFotoData = null;
+    renderAdminServicios();
+    renderServiciosGrid();
+  });
+}
+
+function editServicio(id) {
+  findById('servicios', id, function (s) {
+    if (!s) return;
+    var nombre = prompt('Nombre del servicio:', s.nombre || '');
+    if (nombre === null) return;
+    var precio = prompt('Precio principal:', s.precio || '');
+    if (precio === null) return;
+    var desc = prompt('Descripcion:', s.desc || '');
+    if (desc === null) return;
+    gmUpdate('servicios', id, { nombre: nombre, precio: precio, desc: desc }, function () {
+      renderAdminServicios();
+      renderServiciosGrid();
+    });
+  });
+}
+
+function deleteServicio(id) {
+  if (!confirm('Eliminar este servicio?')) return;
+  gmDelete('servicios', id, function () {
+    renderAdminServicios();
+    renderServiciosGrid();
+  });
+}
+
+function renderAdminServicios() {
+  var c = $id('aServicios'); if (!c) return;
+  gmGetAll('servicios', function (items) {
+    if (!items.length) { c.innerHTML = emptyMsg('No hay servicios publicados.'); return; }
+    c.innerHTML = items.map(function (s) {
+      return adminItem({
+        thumb: s.foto,
+        thumbAlt: s.nombre,
+        thumbIcon: 'build',
+        thumbClick: s.foto ? 'openLbSrc(\'' + s.foto + '\',\'' + esc(s.nombre) + '\')' : '',
+        name: s.nombre,
+        sub: s.precio,
+        actions: editButton('editServicio', s.id) + orderButtons('servicios', s.id),
+        delFn: 'deleteServicio(' + s.id + ')'
+      });
+    }).join('');
+  });
+}
+
+function renderServiciosGrid() {
+  var grid = document.querySelector('#servicios .srv-grid'); if (!grid) return;
+  gmGetAll('servicios', function (items) {
+    if (!items.length) {
+      grid.innerHTML = '<div class="moto-empty"><p style="font-family:var(--font-h);font-size:1.1rem;color:#2a2a2a;text-transform:uppercase">Servicios pendientes de publicar</p></div>';
+      return;
+    }
+    grid.innerHTML = items.map(function (s, index) {
+      var img = s.foto || '';
+      return '<div class="srv-card fi" style="transition-delay:' + ((index + 1) * 60) + 'ms">'
+        + '<div class="srv-img-wrap">'
+        + (img ? '<img class="srv-img" src="' + img + '" alt="' + esc(s.nombre) + '">'
+          : '')
+        + '<div class="srv-img-ph"' + (img ? ' style="display:none;background:linear-gradient(135deg,#1a0000,#2a0a00)"' : ' style="display:flex;background:linear-gradient(135deg,#1a0000,#2a0a00)"') + '>'
+        + '<span class="material-symbols-outlined" style="font-size:56px;color:rgba(192,0,0,0.22)">build</span>'
+        + '</div></div>'
+        + '<div class="srv-body">'
+        + '<div class="srv-spec">Servicio ' + String(index + 1).padStart(2, '0') + '</div>'
+        + '<h3 class="srv-name">' + esc(s.nombre) + '</h3>'
+        + '<p class="srv-desc">' + esc(s.desc || '') + '</p>'
+        + '<div class="srv-footer">'
+        + '<span class="srv-price">' + esc(s.precio) + '</span>'
+        + '<a href="#contacto" class="srv-link">COTIZAR -></a>'
+        + '</div></div></div>';
+    }).join('');
+    grid.querySelectorAll('.fi').forEach(function (el) { if (typeof io !== 'undefined') io.observe(el); });
+  });
 }
 
 function prevMotoFotos(input) {
@@ -323,20 +448,38 @@ function renderAdminGale() {
 }
 
 function renderGaleriaAdmin() {
-  var c = $id('galeriaAdmin'); if (!c) return;
+  var c = $id('galeriaAdmin');
+  var fixed = $id('galeriaFixed');
   gmGetAll('gale', function (gale) {
-    if (!gale.length) { c.innerHTML = ''; return; }
-    c.innerHTML = '<div class="gale-admin-grid">'
-      + gale.map(function (g) {
-        return '<div class="gale-item" onclick="openLbSrc(\'' + g.foto + '\',\'' + esc(g.title) + '\')" style="cursor:zoom-in">'
+    if (!gale.length) {
+      if (c) c.innerHTML = '';
+      return;
+    }
+    if (fixed) {
+      fixed.innerHTML = gale.slice(0, 6).map(function (g, i) {
+        var cls = i === 0 ? ' gale-hero' : i === 1 ? ' gale-r1' : i === 2 ? ' gale-r2' : '';
+        return '<div class="gale-item hud' + cls + '" onclick="openLbSrc(\'' + g.foto + '\',\'' + esc(g.title) + '\')">'
           + '<img src="' + g.foto + '" alt="' + esc(g.title) + '" style="width:100%;height:100%;object-fit:cover;display:block">'
           + '<div class="gale-item-overlay">'
           + '<span class="gale-item-cat">' + esc((g.cat || 'galeria').toUpperCase()) + '</span>'
           + '<span class="gale-item-name">' + esc(g.title) + '</span>'
           + '</div></div>';
-      }).join('')
-      + '</div>';
-    gsap.from('#galeriaAdmin .gale-item', { scale: 0.9, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'back.out(1.3)' });
+      }).join('');
+    }
+    if (c) {
+      var extra = gale.slice(6);
+      c.innerHTML = extra.length ? '<div class="gale-admin-grid">'
+        + extra.map(function (g) {
+          return '<div class="gale-item" onclick="openLbSrc(\'' + g.foto + '\',\'' + esc(g.title) + '\')" style="cursor:zoom-in">'
+            + '<img src="' + g.foto + '" alt="' + esc(g.title) + '" style="width:100%;height:100%;object-fit:cover;display:block">'
+            + '<div class="gale-item-overlay">'
+            + '<span class="gale-item-cat">' + esc((g.cat || 'galeria').toUpperCase()) + '</span>'
+            + '<span class="gale-item-name">' + esc(g.title) + '</span>'
+            + '</div></div>';
+        }).join('')
+        + '</div>' : '';
+    }
+    gsap.from('#galeriaFixed .gale-item, #galeriaAdmin .gale-item', { scale: 0.9, opacity: 0, stagger: 0.06, duration: 0.5, ease: 'back.out(1.3)' });
   });
 }
 

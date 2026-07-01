@@ -1,4 +1,5 @@
 const TABLES = {
+  servicios: 'gm_services',
   motos: 'gm_motorcycles',
   productos: 'gm_products',
   gale: 'gm_gallery',
@@ -166,6 +167,17 @@ function normalizeProduct(row) {
   };
 }
 
+function normalizeService(row) {
+  return {
+    id: row.id,
+    nombre: row.title,
+    precio: row.price,
+    desc: row.description,
+    foto: row.image_url,
+    sort_order: row.sort_order,
+  };
+}
+
 function normalizeMoto(row) {
   return {
     id: row.id,
@@ -211,6 +223,7 @@ module.exports = {
   normalizeGallery,
   normalizeMoto,
   normalizeProduct,
+  normalizeService,
   normalizeReview,
   readJson,
   rest,

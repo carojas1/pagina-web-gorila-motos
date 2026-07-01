@@ -567,6 +567,14 @@
         </div>
 
         <div class="contact-item">
+          <span class="material-symbols-outlined contact-icon">mail</span>
+          <div>
+            <div class="contact-lbl">CORREO</div>
+            <a href="mailto:gorilamotos2026@gmail.com" style="color:var(--txt2);font-size:.95rem">gorilamotos2026@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="contact-item">
           <span class="material-symbols-outlined contact-icon" style="font-variation-settings:'FILL' 1">schedule</span>
           <div>
             <div class="contact-lbl">HORARIOS</div>
@@ -683,6 +691,8 @@
         <div class="footer-links" style="gap:10px">
           <span style="color:var(--txt3)"> Cuenca, Ecuador</span>
           <a href="tel:0980834367" style="color:var(--txt2)"> 098 083 4367</a>
+          <a href="mailto:gorilamotos2026@gmail.com" style="color:var(--txt2)">gorilamotos2026@gmail.com</a>
+          <a href="https://gmotors-frontend.vercel.app/" target="_blank" style="color:var(--txt2)">Portal Gorila Motos</a>
           <span style="color:var(--txt3)"> Lun-Vie: 8:30–13:30 / 15–18h</span>
           <span style="color:var(--txt3)"> Sáb: 9:00–14:00h</span>
         </div>
@@ -715,11 +725,15 @@
 <div id="adminPanel">
   <div class="admin-panel-header">
     <div class="admin-panel-title">PANEL ADMIN - GORILA MOTOS</div>
-    <button onclick="closeAdminPanel()" class="btn btn-outline" style="padding:8px 18px;font-size:12px">SALIR</button>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+      <button onclick="clearAllCloudData()" class="btn btn-outline" style="padding:8px 18px;font-size:12px">LIMPIAR PRUEBAS</button>
+      <button onclick="closeAdminPanel()" class="btn btn-outline" style="padding:8px 18px;font-size:12px">SALIR</button>
+    </div>
   </div>
 
   <div class="admin-tabs">
-    <button class="a-tab active" onclick="switchAdminTab('ventas',this)">MOTOS EN VENTA</button>
+    <button class="a-tab active" onclick="switchAdminTab('servicios',this)">SERVICIOS</button>
+    <button class="a-tab" onclick="switchAdminTab('ventas',this)">MOTOS EN VENTA</button>
     <button class="a-tab"        onclick="switchAdminTab('galeria',this)">GALERÍA</button>
     <button class="a-tab"        onclick="switchAdminTab('productos',this)">PRODUCTOS</button>
     <button class="a-tab"        onclick="switchAdminTab('resenas',this)">RESEÑAS</button>
@@ -727,8 +741,31 @@
 
   <div class="admin-body">
 
+    <!-- SERVICIOS -->
+    <div id="a-servicios" class="a-content active">
+      <div class="a-section-title">EDITAR SERVICIOS Y COSTOS</div>
+      <div class="a-form-grid">
+        <input id="sNombre" class="inp" placeholder="Nombre del servicio"/>
+        <input id="sPrecio" class="inp" placeholder="Costo principal (ej: Desde $15)"/>
+        <textarea id="sDesc" class="inp a-full" rows="2" placeholder="Descripción del servicio..."></textarea>
+        <div class="a-full">
+          <div class="a-upload-zone" onclick="document.getElementById('sFoto').click()">
+            <span class="material-symbols-outlined" style="font-size:36px;color:#2a2a2a;display:block;margin-bottom:6px">add_photo_alternate</span>
+            <p style="font-family:var(--font-m);font-size:11px;color:#3a3a3a;letter-spacing:2px">FOTO DEL SERVICIO</p>
+          </div>
+          <input type="file" id="sFoto" accept="image/*" style="display:none" onchange="prevSrvFoto(this)"/>
+          <div id="sPrev" class="a-preview"></div>
+        </div>
+      </div>
+      <button onclick="addServicio()" class="btn glow-r">PUBLICAR SERVICIO</button>
+      <div class="admin-items">
+        <div class="a-sub-title">SERVICIOS PUBLICADOS</div>
+        <div id="aServicios"></div>
+      </div>
+    </div>
+
     <!-- MOTOS EN VENTA -->
-    <div id="a-ventas" class="a-content active">
+    <div id="a-ventas" class="a-content">
       <div class="a-section-title">PUBLICAR MOTO EN VENTA</div>
       <div class="a-form-grid">
         <input id="mMarca"  class="inp" placeholder="Marca y Modelo (ej: KTM 690)"/>
